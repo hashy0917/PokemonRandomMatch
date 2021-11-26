@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld'
 import Top from './components/Top'
 import Wait from './components/Wait'
 
@@ -17,7 +17,7 @@ export default {
   components: {
     HelloWorld,
     Top,
-    Wait
+    Wait,
   }
 }
 </script>

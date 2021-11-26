@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>現在の待機人数{{ msg }}人</h1>
+    <h1>現在の待機人数{{ count }}人</h1>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'PokemonRandomMatch',
   props: {
-    msg: Intl
+    count: Intl
   }
 }
 </script>

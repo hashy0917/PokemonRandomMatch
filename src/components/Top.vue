@@ -1,27 +1,52 @@
 <template>
   <div class="hello">
     <form @click.prevent>
-      <input v-model="msg" placeholder="トレーナー名を入力してください" />
-      <p>トレーナー名は {{ msg }} でよろしいですか？</p>
-      <button type="submit" v-on:click="push">はい</button>
+      <input v-model="myname" placeholder="トレーナー名を入力してください" />
+      <p>トレーナー名は {{ myname }} でよろしいですか？</p>
+      <button type="submit" v-on:click="openModal">はい</button>
       <button type="submit" v-on:click="clear">いいえ</button>
     </form>
+
+    <MatchingWait apidata1="code" apidata2="name" v-show="showContent" v-on:from-child="closeModal"></MatchingWait>
+
   </div>
 </template>
 
 <script>
+import MatchingWait from "@/components/MatchingWait";
+
 export default {
   name: 'PokemonRandomMatch',
   props: {
-    msg: String
+    myname: String,
+    code: String,
+    name: String,
+    showContent: Boolean,
+  },
+  components: {
+    MatchingWait
   },
   methods:{
     clear: function (){
-      this.msg = ""
+      this.myname = "";
     },
     push: function (){
-
-    }
+      this.axios
+          .post("http://localhost/api",{"userName":this.myname},{
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Content-Type': 'application / x-www-form-urlencoded',
+            }
+          })
+          .then(response => (this.code = response))
+      this.content = true
+    },
+    openModal: function (){
+      this.showContent = true
+    },
+    closeModal: function(){
+      this.showContent = false
+    },
   }
 }
 </script>
