@@ -15,11 +15,11 @@ def post():
         matchCode = ''.join(list(map(str, x)))
         que.put(myname)
         que.put(matchCode)
-        return make_response(jsonify({"name":str(myname.decode("utf-8"))},{"code":str(matchCode)}), 202)
+        return make_response(jsonify({"name":"自分の名前"+str(myname.decode("utf-8"))},{"code":str(matchCode)}), 202)
     else:
         name = que.get()
         code = que.get()
-        return make_response(jsonify({"name":str(name.decode("utf-8"))},{"code":str(code)}), 202)
+        return make_response(jsonify({"name":"あいての名前"+str(name.decode("utf-8"))},{"code":str(code)}), 202)
 
 @api.errorhandler(404)
 def not_found(error):

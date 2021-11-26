@@ -29,3 +29,13 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     #- run: npm test
+    - name: rsync deployments
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr
+          path: ${{ env.theme_name }}.zip
+          remote_path: ${{ secrets.DEPLOY_HOST_PATH }}
+          remote_host: ${{ secrets.DEPLOY_HOST_SERVER }}
+          remote_port: ${{ secrets.DEPLOY_PORT_SERVER }}
+          remote_user: ${{ secrets.DEPLOY_USER_SERVER }}
+          remote_key: ${{ secrets.DEPLOY_KEY_SERVER }}
