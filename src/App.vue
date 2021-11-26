@@ -3,7 +3,7 @@
     <img class="monsterball" alt="monster ball logo" src="./assets/main_pb.png">
     <HelloWorld msg="Welcome to PokemonRandomMatch Server"/>
     <Top></Top>
-    <Wait count="6"></Wait>
+    <Wait count="" v-show="false"></Wait>
   </div>
 </template>
 

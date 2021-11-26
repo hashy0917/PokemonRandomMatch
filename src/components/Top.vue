@@ -33,23 +33,16 @@ export default {
       this.myname = "";
     },
     push: function (){
-      this.axios
-          .post("http://localhost:3000/api",{"userName":this.myname},{
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'Content-Type': 'application / x-www-form-urlencoded',
-            }
-          })
-          .then(response => (this.code = response))
-          .then(response => (this.name = response))
+      this.axios.post("/api/v1", this.myname)
+          .then(response => this.code = response.data)
     },
     openModal: function (){
       if(!this.myname){
         alert('トレーナー名を入力してください')
         return
       }
-      this.showContent = true
       this.push()
+      this.showContent = true
     },
     closeModal: function(){
       this.showContent = false

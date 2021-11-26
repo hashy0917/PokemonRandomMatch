@@ -1,25 +1,25 @@
 #!/usr/bin/python3
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 import queue
 import random
 
-api = Flask(__name__)
 que = queue.Queue()
+api = Flask(__name__)
 
-@api.route('/', methods=['GET', 'POST'])
-def put_user(userName):
+@api.route('/api/v1', methods=['POST'])
+def post():
+    myname = request.get_data()
+    print(myname)
     if que.empty():
-    # queが空の場合trueが帰る
         x = [random.randint(0, 9) for p in range(0, 8)]
         matchCode = ''.join(list(map(str, x)))
-        que.put(userName)
+        que.put(myname)
         que.put(matchCode)
-        return make_response("""{}""".format(str(matchCode)))
+        return make_response(jsonify({"name":str(myname.decode("utf-8"))},{"code":str(matchCode)}), 202)
     else:
         name = que.get()
         code = que.get()
-        return make_response("""{},{}""".format(str(code),str(name)))
-
+        return make_response(jsonify({"name":str(name.decode("utf-8"))},{"code":str(code)}), 202)
 
 @api.errorhandler(404)
 def not_found(error):
