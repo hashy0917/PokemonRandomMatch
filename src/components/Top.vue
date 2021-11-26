@@ -1,13 +1,13 @@
 <template>
   <div class="hello">
-    <form @click.prevent>
+    <form @click.prevent method="post">
       <input v-model="myname" placeholder="トレーナー名を入力してください" />
       <p>トレーナー名は {{ myname }} でよろしいですか？</p>
       <button type="submit" v-on:click="openModal">はい</button>
       <button type="submit" v-on:click="clear">いいえ</button>
     </form>
 
-    <MatchingWait apidata1="code" apidata2="name" v-show="showContent" v-on:from-child="closeModal"></MatchingWait>
+    <MatchingWait :apidata1=code :apidata2=name v-show="showContent" v-on:from-child="closeModal"></MatchingWait>
 
   </div>
 </template>
@@ -22,6 +22,8 @@ export default {
     code: String,
     name: String,
     showContent: Boolean,
+    apidata1: String,
+    apidata2: String,
   },
   components: {
     MatchingWait
@@ -32,17 +34,22 @@ export default {
     },
     push: function (){
       this.axios
-          .post("http://localhost/api",{"userName":this.myname},{
+          .post("http://localhost:3000/api",{"userName":this.myname},{
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
               'Content-Type': 'application / x-www-form-urlencoded',
             }
           })
           .then(response => (this.code = response))
-      this.content = true
+          .then(response => (this.name = response))
     },
     openModal: function (){
+      if(!this.myname){
+        alert('トレーナー名を入力してください')
+        return
+      }
       this.showContent = true
+      this.push()
     },
     closeModal: function(){
       this.showContent = false

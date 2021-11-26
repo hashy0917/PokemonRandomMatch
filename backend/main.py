@@ -6,7 +6,7 @@ import random
 api = Flask(__name__)
 que = queue.Queue()
 
-@api.route('/api', methods=['GET', 'POST'])
+@api.route('/', methods=['GET', 'POST'])
 def put_user(userName):
     if que.empty():
     # queが空の場合trueが帰る
@@ -14,11 +14,12 @@ def put_user(userName):
         matchCode = ''.join(list(map(str, x)))
         que.put(userName)
         que.put(matchCode)
-        return """{}""".format(str(matchCode))
+        return make_response("""{}""".format(str(matchCode)))
     else:
         name = que.get()
         code = que.get()
-        return """{},{}""".format(str(code),str(name))
+        return make_response("""{},{}""".format(str(code),str(name)))
+
 
 @api.errorhandler(404)
 def not_found(error):
