@@ -1,8 +1,8 @@
 <template>
   <div id="overlay" v-show="showContent">
     <div id="content" >
-      <p>{{ apidata2 }}</p>
-      <p>{{ apidata1 }}</p>
+      <p>対戦トレーナー名：{{ apidata2 }}</p>
+      <p>パスワード：{{ apidata1 }}</p>
       <p><button v-on:click="clickEvent">マッチングしました</button></p>
     </div>
   </div>

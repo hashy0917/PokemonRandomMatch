@@ -34,7 +34,10 @@ export default {
     },
     push: function (){
       this.axios.post("/api/v1", this.myname)
-          .then(response => this.code = response.data)
+          .then(response => {
+            this.code = response.data.code
+            this.name = response.data.name
+          })
     },
     openModal: function (){
       if(!this.myname){
